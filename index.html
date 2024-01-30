@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="estilos/css.css">
+    <title>Pagina Principal</title>
+</head>
+<body>
+    <!-- SECCION I N I C I O -->
+    <section id="inicio">
+        <div class="contenido">
+            <header>
+                <div class="contenido-header">
+                    <h1>/VM/</h1>
+                    <nav id="nav" class="">
+                        <ul id="links">
+                            <li><a href="index.html" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
+                            <li><a href="#sobremi" onclick="seleccionar(this)">NOSOTROS</a></li>
+                            <li><a href="ropa.html">PRODUCTOS</a></li>
+                            <li><a href="visionymision.html" onclick="seleccionar(this)">VISION</a></li>
+                            <li><a href="cliente.html" onclick="seleccionar(this)" > CLIENTES </a></li>
+                            <li><a href="horario.html" onclick="seleccionar(this)" > HORARIOS </a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- Icono del menu responsive -->
+                    <div id="icono-nav" onclick="responsiveMenu()">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <div class="redes">
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram-square"></i></a>
+                    </div>
+                </div>
+            </header>
+            <div class="presentacion">
+                <p class="bienvenida">Bienvenidos</p>
+                <h2>Almacenes "Variedades Monada"</h2>
+                <p class="descripcion">DESCUBRE LOS MEJORES PRODUCTOS A LOS MEJORES PRECIOS</p>
+                <a href="#portfolio"> Ver Categorias </a>
+            </div>
+        </div>
+    </section>
+        <!-- SECCION S O B R E L A E M P R E S A -->
+        <section id="sobremi">
+            <div class="contenedor-foto">
+                <img src="img/cat11.jpg" alt="">
+            </div>
+            <div class="sobremi">
+                <p class="titulo-seccion">Sobre Nosotros</p>
+                <h2>Hola, Somos tu Almacen <span> "Variedades Monada" </span> </h2>
+                <h3> Venta de Ropa de primera</h3>
+                <p style="text-align: justify;"> "Bienvenidos a tu Almacen "Variedades Monada". Sumérgete en la elegancia y la tendencia con nuestra cuidadosa selección de prendas que reflejan el estilo y la personalidad de la mujer."</p>
+                <p>Almacen "Variedades Monada", donde la moda se encuentra al alcance de tu mano.</p>
+            </div>
+        </section>
+<!-- SECCION PORTAFOLIO -->
+    <section id="portfolio">
+        <h3 class="titulo-seccion"> CATEGORIAS </h3>
+        <div class="fila">
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat12.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria: </h4>
+                    <p> Ropa Deportiva </p>
+                </div>
+                </a>
+            </div>
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat1.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria: </h4>
+                    <p> Ropa Casual</p>
+                </div>
+                </a>
+            </div>
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat8.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria: </h4>
+                    <p> Ropa de Noche</p>
+                </div>
+                </a>
+            </div>
+        </div>
+        <div class="fila">
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat6.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria </h4>
+                    <p> Trajes de baño </p>
+                </div>
+                </a>
+            </div>
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat7.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria: </h4>
+                    <p> Lenceria </p>
+                </div>
+                </a>
+            </div>
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat4.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria: </h4>
+                    <p> Conjuntos </p>
+                </div>
+                </a>
+            </div>
+        </div>
+        <div class="fila">
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat3.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria: </h4>
+                    <p> Vestidos </p>
+                </div>
+                </a>
+            </div>
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat2.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria </h4>
+                    <p> Formal </p>
+                </div>
+                </a>
+            </div>
+            <div class="proyecto">
+                <a href="ropa.html">
+                <div class="overlay"></div>
+                <img src="img/cat5.jpg" alt="">
+                <div class="info">
+                    <h4> Categoria: </h4>
+                    <p> Semiformal</p>
+                </div>
+                </a>
+            </div>
+        </div>    
+            <div class="fila">
+                <div class="proyecto">
+                    <div class="overlay"></div>
+                    <img src="img/1.jpg" alt="">
+                        <div class="info">
+                            <h3>Producto 1</h3>
+                            <p>Precio: $10.00</p>
+                        </div>
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Producto 1', 10.00)">Agregar al carrito</button>
+            </div>
+    </section>
+    <!-- SECCION H A B I L I D A D E S -->
+    <div class="contenedor-skills" id="skills">
+        <h3> Productos mas Vendidos </h3>
+        <div class="skill">
+            <div class="info">
+                <p> <span class="lista"> </span> Vestidos</p>
+                <span class="porcentaje">95%</span>
+            </div>
+
+            <div class="barra">
+                <div class="" id="html"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <div class="info">
+                <p> <span class="lista"> </span>Casual</p>
+                <span class="porcentaje">90%</span>
+            </div>
+
+            <div class="barra">
+                <div class="" id="js"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <div class="info">
+                <p> <span class="lista"> </span> Conjuntos</p>
+                <span class="porcentaje">90%</span>
+            </div>
+
+            <div class="barra">
+                <div class="" id="bd"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <div class="info">
+                <p> <span class="lista"> </span> Ropa Deportiva</p>
+                <span class="porcentaje">85%</span>
+            </div>
+
+            <div class="barra">
+                <div class="" id="ps"></div>
+            </div>
+        </div>
+    </div>
+    <!-- SECCTION C O N T A C T O -->
+    <section id="contacto">
+        <h3 class="titulo-seccion">Contactanos ahora</h3>
+        <div class="contenedor-form">
+            <form action="https://formsubmit.co/monica19852009@hotmail.com" method="POST">
+                <div class="fila mitad">
+                    <input type="text" name="name" id="name" placeholder="Nombre Completo *" class="input-mitad" required>
+                    <input type="email" name="email" id="email" placeholder="Dirección de Email" class="input-mitad" required>
+                </div>
+                <div class="fila">
+                    <input type="text" name="subject" id="subject" placeholder="Tema..." class="input-full" required>
+                </div>
+                <div class="fila">
+                    <textarea name="coments" id="coments" cols="30" rows="10" placeholder="Tu Mensaje..." class="input-full" required></textarea>
+                </div>
+
+                <input type="submit" value="Enviar Mensaje" class="btn-enviar">
+
+                <input type="hidden" name="_next" value="http://localhost/Practicas/index.html">
+
+                <input type="hidden" name="_captcha" value="false">
+            </form>
+        </div>
+    </section>
+    <div class="floating-button">
+        <a href="carrito.html" id="cart-icon">&#128722;</a>
+    </div>
+    <!-- SECCION FOOTER -->
+    <footer>
+        <p>Todos los derechos reservados - 2023</p>
+        <div class="redes">
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram-square"></i></a>
+        </div>
+
+    </footer>
+    <script>
+        document.getElementById('cart-icon').addEventListener('click', function() {
+            window.location.href= 'carrito.html';
+        });
+    </script>    
+    <script src="Script.js"></script>
+</body>
+</html>

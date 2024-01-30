@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"> 
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <title >Soporte Tecnico</title>
+    <link rel="stylesheet" href="estilos/css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        #resizable { width: 300px; height: 300px; padding: 0.5em; border: 1px solid #ccc; overflow: hidden; }
+        #resizable img { width: 100%; height: 100%; object-fit: cover; }
+    </style>  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+  
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+        .c-item{
+          height: 450px;
+        }
+        .c-img{
+          height: 100%;
+          object-fit: cover;
+          filter:brightness(0.6);
+          
+        }
+        .alinear{
+          text-align: justify;
+        }
+        .efecto:hover{
+          transform:scale(1.02)
+        }
+        .card{
+          transition: 0.3s;
+        }
+        .fondo{
+          background-color: #435B66;
+        }
+       </style>
+</head>
+<body>
+    <section id="inicio">
+        <div class="contenido">
+            <header>
+                <div class="contenido-header">
+                    <h1>/VM/</h1>
+                    <nav id="nav" class="">
+                        <ul id="links">
+                            <li><a href="index.html" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
+                            <li><a href="#sobremi" onclick="seleccionar(this)"> NOSOTROS</a></li>
+                            <li><a href="ropa.html" onclick="seleccionar(this)"> PRODUCTOS </a></li>
+                            <li><a href="visionymision.html" onclick="seleccionar(this)"> VISION </a></li>
+                            <li><a href="cliente.html" onclick="seleccionar(this)"> CLIENTES </a></li>
+                            <li><a href="horario.html" onclick="seleccionar(this)"> HORARIO </a></li>
+                        </ul>
+                    </nav>
+                    <!-- Icono del menu responsive -->
+                    <div id="icono-nav" onclick="responsiveMenu()">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <div class="redes">
+                        <a href="www.youtube.com"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="www.facebook.com"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="www.instagram.com"><i class="fa-brands fa-instagram-square"></i></a>
+                    </div>
+                </div>
+            </header>
+            </div>
+            <br><br><br><br>
+            <div>
+              <table style="width: 100%;LETTER-SPACING:0.1px; FONT-SIZE:14px;TEXT-ALIGN:left;LINE-HEIGHT:21px;FONT-FAMILY:Montserrat,sans-serif; BACKGROUND:white;color:pink; table-layout: fixed;border-collapse: collapse; " align="center">
+                  <tr>
+                      <td>
+                          <img src="imagen/icono.jfif">
+                      </td>
+                      <td>
+                          <h4 class="title" style="color:light red; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;" > HORARIOS DE ATENCION</h4>
+                      </td>
+                      <td rowspan="7" style="background-image: url(imagenes/banner_2.jpg); opacity: 0.3;" >
+                          &nbsp;
+                      </td>
+                      <td>
+                           <h4 class="title" style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;" > ENLACES EXTERNOS</h4>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td style="color:blue; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">Lunes</td>
+                      <td style="color:blue; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">11:00 - 19:00</td>
+                      <td rowspan="6" valign="top">
+                      </td>        
+                  </tr>
+                  <tr>
+                      <td style="color:aqua; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">Martes</td>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">11:00 - 19:00</td>                    
+                  </tr>
+                  <tr>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">Miércoles</td>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">11:00 - 19:00</td>
+                  </tr>
+                  <tr>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">Jueves</td>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">11:00 - 19:00</td>
+                  </tr>
+                  <tr>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">Viernes</td>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">11:00 - 19:00</td>
+                  </tr>
+                  <tr>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">Sábado</td>
+                      <td style="color:#000000; font-size:24px;font-family: Merriweather, serif; line-height: 36px; text-align:left;letter-spacing: normal; text-align: center;">11:00 - 19:00</td>
+                  </tr>
+              </table>
+          </div>
+        </section>
+<footer>
+    <p>Todos los derechos reservados - 2023</p>
+    <div class="redes">
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram-square"></i></a>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="estilos/Script.js"></script>
+</body>
+</html>
