@@ -1,3 +1,7 @@
+<?php
+require_once "config/conexion.php";
+require_once "config/config.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,7 +23,7 @@
                     <h1>/VM/</h1>
                     <nav id="nav" class="">
                         <ul id="links">
-                            <li><a href="index.html" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
+                            <li><a href="index.php" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
                             <li><a href="#sobremi" onclick="seleccionar(this)">NOSOTROS</a></li>
                             <li><a href="ropa.html">PRODUCTOS</a></li>
                             <li><a href="visionymision.html" onclick="seleccionar(this)">VISION</a></li>
@@ -60,9 +64,13 @@
     <br>
     <div style="position: absolute; bottom: 0; right: 0;" class="col-md-4">
         <p style="color: white; font-size: 20px; display: inline-block;">Total: <span id="total"></span></p>
-        <button class="boton"> Pagar </button>
+        <div id="paypal-button-container"></div>
     </div>
 </section>
+<script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&locale=<?php echo LOCALE; ?>"></script>
+<script>
+    paypal.Buttons().render('#paypal-button-container');
+</script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Si la página actual es la del carrito, muestra los productos del carrito

@@ -1,3 +1,4 @@
+<?php require_once "config/conexion.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@
                     <h1>/VM/</h1>
                     <nav id="nav" class="">
                         <ul id="links">
-                            <li><a href="index.html" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
+                            <li><a href="index.php" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
                             <li><a href="#sobremi" onclick="seleccionar(this)">NOSOTROS</a></li>
                             <li><a href="ropa.html">PRODUCTOS</a></li>
                             <li><a href="visionymision.html" onclick="seleccionar(this)">VISION</a></li>
@@ -156,18 +157,7 @@
                 </div>
                 </a>
             </div>
-        </div>    
-            <div class="fila">
-                <div class="proyecto">
-                    <div class="overlay"></div>
-                    <img src="img/1.jpg" alt="">
-                        <div class="info">
-                            <h3>Producto 1</h3>
-                            <p>Precio: $10.00</p>
-                        </div>
-                </div>
-                <button class="add-to-cart" onclick="addToCart('Producto 1', 10.00)">Agregar al carrito</button>
-            </div>
+        </div>
     </section>
     <!-- SECCION H A B I L I D A D E S -->
     <div class="contenedor-skills" id="skills">
@@ -238,7 +228,7 @@
         </div>
     </section>
     <div class="floating-button">
-        <a href="carrito.html" id="cart-icon">&#128722;</a>
+        <a href="carrito.php" id="cart-icon">&#128722;</a>
     </div>
     <!-- SECCION FOOTER -->
     <footer>
@@ -252,7 +242,7 @@
     </footer>
     <script>
         document.getElementById('cart-icon').addEventListener('click', function() {
-            window.location.href= 'carrito.html';
+            window.location.href= 'carrito.php';
         });
     </script>    
     <script src="Script.js"></script>
