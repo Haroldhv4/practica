@@ -23,9 +23,9 @@ require_once "config/config.php";
                     <h1>/VM/</h1>
                     <nav id="nav" class="">
                         <ul id="links">
-                            <li><a href="index.php" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
+                            <li><a href="index.html" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
                             <li><a href="#sobremi" onclick="seleccionar(this)">NOSOTROS</a></li>
-                            <li><a href="ropa.html">PRODUCTOS</a></li>
+                            <li><a href="ropa.php">PRODUCTOS</a></li>
                             <li><a href="visionymision.html" onclick="seleccionar(this)">VISION</a></li>
                             <li><a href="cliente.html" onclick="seleccionar(this)" > CLIENTES </a></li>
                         </ul>
