@@ -102,10 +102,11 @@ function generatePDF() {
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="./">Variedades Monada</a>
+                <a class="navbar-brand" href="index.html">Variedades Monada</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <a class="navbar-brand" href="ropa.php"> Regresar </a>
             </div>
         </nav>
     </div>
@@ -140,10 +141,9 @@ function generatePDF() {
                     </div>
                 </div>
                 <div class="col-md-5 ms-auto">
-                    <h4>Total a Pagar: <span id="total_pagar">0.00</span></h4>
+                    <h4>Total a Pagar: <span id="total_pagar">$ 0.00</span></h4>
                     <div class="d-grid gap-2">
                         <div id="paypal-button-container"></div>
-                        <a class="btn btn-primary" href="?generate_pdf=true"> Factura </a>
                         <button class="btn btn-warning" type="button" id="btnVaciar">Vaciar Carrito</button>
                     </div>
                 </div>
