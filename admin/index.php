@@ -1,43 +1,77 @@
-<?php
+<?php 
+require_once "../config/conexion.php";
+
 session_start();
+
 if (!empty($_SESSION['active'])) {
     header('location: productos.php');
-} else {
-    if (!empty($_POST)) {
-        $alert = '';
-        if (empty($_POST['usuario']) || empty($_POST['clave'])) {
-            $alert = '<div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
-                        Ingrese usuario y contraseña
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
-        } else {
-            require_once "../config/conexion.php";
-            $user = mysqli_real_escape_string($conexion, $_POST['usuario']);
-            $clave = md5(mysqli_real_escape_string($conexion, $_POST['clave']));
-            $query = mysqli_query($conexion, "SELECT * FROM usuarios WHERE usuario = '$user' AND clave = '$clave'");
-            mysqli_close($conexion);
-            $resultado = mysqli_num_rows($query);
-            if ($resultado > 0) {
-                $dato = mysqli_fetch_array($query);
+    exit; // Termina el script
+}
+
+if (!empty($_POST)) {
+    $alert = '';
+    if (empty($_POST['usuario']) || empty($_POST['clave'])) {
+        $alert = '<div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+                    Ingrese usuario y contraseña
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
+    } else {
+        $user = mysqli_real_escape_string($conexion, $_POST['usuario']);
+        $clave = mysqli_real_escape_string($conexion, $_POST['clave']);
+        
+        $query = mysqli_query($conexion, "SELECT id, nombre, usuario, clave FROM usuarios WHERE usuario = '$user'");
+        $row = mysqli_fetch_assoc($query);
+
+        if ($row) {
+            // Verifica la contraseña cifrada
+            if (password_verify($clave, $row['clave'])) {
+                // Contraseña correcta, iniciar sesión
                 $_SESSION['active'] = true;
-                $_SESSION['id'] = $dato['id'];
-                $_SESSION['nombre'] = $dato['nombre'];
-                $_SESSION['user'] = $dato['usuario'];
+                $_SESSION['id'] = $row['id'];
+                $_SESSION['nombre'] = $row['nombre'];
+                $_SESSION['user'] = $row['usuario'];
                 header('Location: productos.php');
+                exit; // Termina el script
             } else {
-                $alert = '<div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
-                        Contraseña incorrecta
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>';
-                session_destroy();
+                // Verifica la contraseña sin cifrar
+                if ($clave == $row['clave']) {
+                    // Contraseña coincidente, actualizar a versión cifrada
+                    $hashed_password = password_hash($clave, PASSWORD_DEFAULT);
+                    mysqli_query($conexion, "UPDATE usuarios SET clave = '$hashed_password' WHERE id = ".$row['id']);
+                    
+                    // Continuar con el inicio de sesión
+                    $_SESSION['active'] = true;
+                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['nombre'] = $row['nombre'];
+                    $_SESSION['user'] = $row['usuario'];
+                    header('Location: productos.php');
+                    exit; // Termina el script
+                } else {
+                    // Contraseña incorrecta
+                    $alert = '<div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+                            Contraseña incorrecta
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>';
+                    session_destroy();
+                }
             }
+        } else {
+            // Usuario no encontrado
+            $alert = '<div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+                    Usuario no encontrado
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>';
         }
     }
 }
+
+mysqli_close($conexion);
 ?>
 <!DOCTYPE html>
 <html lang="en">

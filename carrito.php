@@ -1,111 +1,232 @@
 <?php
 require_once "config/conexion.php";
 require_once "config/config.php";
-?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
-    <link rel="stylesheet" href="estilos/css.css">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Carrito de Compras</title>
-</head>
-<body>
-    <section id="inicio">
-        <div class="contenido">
-            <header>
-                <div class="contenido-header">
-                    <h1>/VM/</h1>
-                    <nav id="nav" class="">
-                        <ul id="links">
-                            <li><a href="index.html" class="seleccionado" onclick="seleccionar(this)">INICIO</a></li>
-                            <li><a href="#sobremi" onclick="seleccionar(this)">NOSOTROS</a></li>
-                            <li><a href="ropa.php">PRODUCTOS</a></li>
-                            <li><a href="visionymision.html" onclick="seleccionar(this)">VISION</a></li>
-                            <li><a href="cliente.html" onclick="seleccionar(this)" > CLIENTES </a></li>
-                        </ul>
-                    </nav>
+require_once "tcpdf/tcpdf.php";
 
-                    <!-- Icono del menu responsive -->
-                    <div id="icono-nav" onclick="responsiveMenu()">
-                        <i class="fa-solid fa-bars"></i>
-                    </div>
-                    <div class="redes">
-                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram-square"></i></a>
-                    </div>
-                </div>
-            </header>
-            <br>    
-            <br>
-            <br>
-            <br>
-            <br>
-            <p style="text-align: center; color: white;" class="bienvenida"> BIENVENIDO/A</p>
-            <h2 style="color: white;"> Almacen "Variedades Monada"</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody style="color: white;" id="carrito-body">
-            <!-- Aquí se mostrarán los productos del carrito -->
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <div style="position: absolute; bottom: 0; right: 0;" class="col-md-4">
-        <p style="color: white; font-size: 20px; display: inline-block;">Total: <span id="total"></span></p>
-        <div id="paypal-button-container"></div>
-    </div>
-</section>
-<script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&locale=<?php echo LOCALE; ?>"></script>
-<script>
-    paypal.Buttons().render('#paypal-button-container');
-</script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Si la página actual es la del carrito, muestra los productos del carrito
-            if (window.location.href.includes("carrito.html")) {
-                showCart();
-            }
-        });
+// Iniciar la sesión
+session_start();
 
-        function showCart() {
-            console.log("showcard se está ejecutando");
-            let carritoBody = document.getElementById('carrito-body');
-            let totalElement = document.getElementById('total');
+if (isset($_GET['generate_pdf'])) {
+    generatePDF();
+}
 
-            // Recupera el carrito almacenado en localStorage
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+function generatePDF() {
+    global $conexion;
 
-            // Limpia el contenido actual de la tabla
-            carritoBody.innerHTML = '';
+    // Obtener productos desde la base de datos
+    $productQuery = mysqli_query($conexion, "SELECT * FROM productos");
+    $products = mysqli_fetch_all($productQuery, MYSQLI_ASSOC);
 
-            // Recorre los elementos del carrito y los agrega a la tabla
-            carrito.forEach(item => {
-                let row = carritoBody.insertRow();
-                let cellProducto = row.insertCell(0);
-                let cellPrecio = row.insertCell(1);
+    // Crear un archivo PDF
+    $pdfFilePath = 'Factura.pdf';
+    $pdf = new TCPDF();
+    $pdf->SetFont('dejavusans', '', 12);
 
-                cellProducto.innerHTML = item.producto;
-                cellPrecio.innerHTML = `$${item.precio.toFixed(2)}`;
+    // Establecer la información del documento
+    $pdf->SetCreator('Your Creator');
+    $pdf->SetAuthor('Your Author');
+    $pdf->SetTitle(' Productos "Tienda Online"');
+    $pdf->SetHeaderData('', 0, 'Productos', '');
+
+    // Agregar una página
+    $pdf->AddPage();
+
+    // Escribir el encabezado
+    $pdf->Cell(0, 10, "Tienda Online", 0, 1, 'C');
+
+    // Escribir encabezados de columnas
+    $pdf->Cell(30, 10, 'ID', 1);
+    $pdf->Cell(70, 10, 'Producto', 1);
+    $pdf->Cell(30, 10, 'Precio', 1);
+    $pdf->Ln();
+
+    $total = 0;
+
+    // Obtener productos desde localStorage
+    if (isset($_POST['data']) && !empty($_POST['data'])) {
+        $productIds = json_decode($_POST['data'], true);
+
+        foreach ($productIds as $productId) {
+            // Encontrar el producto en el array
+            $product = array_filter($products, function ($item) use ($productId) {
+                return $item['id'] == $productId;
             });
 
-            // Calcula el total después de haber recorrido todos los elementos
-            let total = carrito.reduce((acc, item) => acc + item.precio, 0);
+            if ($product) {
+                $product = reset($product);
 
-            // Actualiza el total
-            totalElement.innerHTML = `$${total.toFixed(2)}`;
+                // Agregar una fila al PDF
+                $pdf->Cell(30, 10, $product['id'], 1);
+                $pdf->Cell(70, 10, $product['nombre'], 1);
+                $pdf->Cell(30, 10, $product['precio'], 1);
+                $pdf->Ln();
+
+                $total += $product['precio'];
+            }
+        }
+    }
+
+    // Agregar una fila para el total
+    $pdf->Cell(100, 10, 'Total', 1);
+    $pdf->Cell(30, 10, $total, 1);
+
+    // Salida del PDF
+    $pdf->Output($pdfFilePath, 'D');
+
+    // Salir del script
+    exit;
+}
+?>
+
+<!-- Pagina renderiza para la vista del carrito -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Carrito de Compras</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" /> -->
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="assets/css/styles.css" rel="stylesheet" />
+    <link href="assets/css/estilos.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Navigation-->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./">Variedades Monada</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </div>
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Carrito</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Tus Productos Agregados.</p>
+            </div>
+        </div>
+    </header>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblCarrito">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-5 ms-auto">
+                    <h4>Total a Pagar: <span id="total_pagar">0.00</span></h4>
+                    <div class="d-grid gap-2">
+                        <div id="paypal-button-container"></div>
+                        <a class="btn btn-primary" href="?generate_pdf=true"> Factura </a>
+                        <button class="btn btn-warning" type="button" id="btnVaciar">Vaciar Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&locale=<?php echo LOCALE; ?>"></script>
+    <script src="assets/js/scripts.js"></script>
+    <script>
+        mostrarCarrito();
+
+        function mostrarCarrito() {
+            if (localStorage.getItem("productos") != null) {
+                let array = JSON.parse(localStorage.getItem('productos'));
+                if (array.length > 0) {
+                    $.ajax({
+                        url: 'ajax.php',
+                        type: 'POST',
+                        async: true,
+                        data: {
+                            action: 'buscar',
+                            data: array
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            const res = JSON.parse(response);
+                            let html = '';
+                            res.datos.forEach(element => {
+                                html += `
+                            <tr>
+                                <td>${element.id}</td>
+                                <td>${element.nombre}</td>
+                                <td>${element.precio}</td>
+                                <td>1</td>
+                                <td>${element.precio}</td>
+                            </tr>
+                            `;
+                            });
+                            $('#tblCarrito').html(html);
+                            $('#total_pagar').text(res.total);
+                            paypal.Buttons({
+                                style: {
+                                    color: 'blue',
+                                    shape: 'pill',
+                                    label: 'pay'
+                                },
+                                createOrder: function(data, actions) {
+                                    // This function sets up the details of the transaction, including the amount and line item details.
+                                    return actions.order.create({
+                                        purchase_units: [{
+                                            amount: {
+                                                value: res.total
+                                            }
+                                        }]
+                                    });
+                                },
+                                onApprove: function(data, actions) {
+                                    // This function captures the funds from the transaction.
+                                    return actions.order.capture().then(function(details) {
+                                        // This function shows a transaction success message to your buyer.
+                                        alert('Transaction completed by ' + details.payer.name.given_name);
+                                    });
+                                }
+                            }).render('#paypal-button-container');
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            }
         }
     </script>
 </body>
+
 </html>
